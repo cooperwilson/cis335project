@@ -37,7 +37,7 @@ def train_model(model_name, X_train, y_train, **kwargs):
 
 # Main function
 def main():
-    st.title("Machine Learning Playground")
+    st.title("Quarterback Statistics 2001 - 2021")
 
     # Sidebar - File Upload
     st.sidebar.title("Upload CSV File")
