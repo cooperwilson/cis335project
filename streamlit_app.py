@@ -10,7 +10,7 @@ from sklearn.metrics import accuracy_score
 # Load data
 @st.cache_data
 def load_data(filename):
-    return pd.read_csv('data/passing_cleaned.csv')
+    return pd.read_csv(filename)
 
 # Normalization functions
 def z_score_normalization(data):
@@ -90,11 +90,7 @@ def main():
 
         st.write("Accuracy:", accuracy)
 
-
-if __name__ == "__main__":
-    main()
-
-
+main()
 
 
 
