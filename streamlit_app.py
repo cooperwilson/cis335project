@@ -7,11 +7,6 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 
-# Load data
-@st.cache_data
-def load_data(filename):
-    return pd.read_csv(filename)
-
 # Classification models
 def train_model(model_name, X_train, y_train, **kwargs):
     if model_name == 'Random Forest':
