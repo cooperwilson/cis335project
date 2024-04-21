@@ -12,15 +12,6 @@ from sklearn.metrics import accuracy_score
 def load_data(filename):
     return pd.read_csv(filename)
 
-# Normalization functions
-def z_score_normalization(data):
-    scaler = StandardScaler()
-    return scaler.fit_transform(data)
-
-def min_max_normalization(data):
-    scaler = MinMaxScaler()
-    return scaler.fit_transform(data)
-
 # Classification models
 def train_model(model_name, X_train, y_train, **kwargs):
     if model_name == 'Random Forest':
@@ -44,7 +35,7 @@ def mainfunction():
     uploaded_file = st.sidebar.file_uploader("Upload CSV file", type=['csv'])
 
     if uploaded_file is not None:
-        data = load_data(uploaded_file)
+        data = pd.read_csv(uploaded_file)
         st.write(data)
 
         # Sidebar - Normalization
@@ -52,9 +43,11 @@ def mainfunction():
         normalization_method = st.sidebar.selectbox("Choose normalization method", ("Z-score", "Min-Max"))
 
         if normalization_method == "Z-score":
-            normalized_data = z_score_normalization(data)
+            scaler = StandardScaler()
+            normalized_data = scaler.fit_transform(data)
         elif normalization_method == "Min-Max":
-            normalized_data = min_max_normalization(data)
+            scaler = MinMaxScaler()
+            normalized_data = scaler.fit_transform(data)
 
         # Sidebar - Model Selection
         st.sidebar.title("Classification Models")
@@ -79,8 +72,8 @@ def mainfunction():
             model_params = {'max_depth': max_depth}
 
         # Train-test split
-        features = ('Age','G','GS','Cmp','Att','Cmp%','Yds','TD','Int','Lng','Y/A','Y/C','Y/G','Rate','Sk','Year')
-        X = normalized_data(features)
+        features = ['G','GS','Cmp','Att','Cmp%','Yds','TD','Int','Lng','Y/A','Y/C','Y/G','Rate','Sk','Year']
+        X = normalized_data[features]
         y = normalized_data['Age']
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
